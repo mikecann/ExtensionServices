@@ -2,8 +2,8 @@
   "version": "v4",
   "repo": "borisyankov/DefinitelyTyped",
   "ref": "master",
-  "path": "typings",
-  "bundle": "typings/tsd.d.ts",
+  "path": "src/typings",
+  "bundle": "src/typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
       "commit": "0cd5f0a1482dc3149f5446b1d885ef6ac7c57720"
@@ -23,9 +23,6 @@
     "mongodb/mongodb.d.ts": {
       "commit": "4d2d0653003a4d1df4d7c68054cce4f4ace58bdf"
     },
-    "es6-promise/es6-promise.d.ts": {
-      "commit": "4d2d0653003a4d1df4d7c68054cce4f4ace58bdf"
-    },
     "node-uuid/node-uuid.d.ts": {
       "commit": "4d2d0653003a4d1df4d7c68054cce4f4ace58bdf"
     },
@@ -37,6 +34,24 @@
     },
     "jsonwebtoken/jsonwebtoken.d.ts": {
       "commit": "0cd5f0a1482dc3149f5446b1d885ef6ac7c57720"
+    },
+    "react/react-dom.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "react/react.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "react-bootstrap/react-bootstrap.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "react-router/history.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "react-router/react-router.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
     }
   }
 }

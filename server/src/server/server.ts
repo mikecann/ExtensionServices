@@ -1,9 +1,11 @@
+/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="./es6-promise/es6-promise.d.ts" />
+
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import { MongoClient, ObjectID } from "mongodb";
 
 var app = express();
-
 
 var dbUrl = "mongodb://mike:&1POhVSIS#Sh@ds015690.mlab.com:15690/chromestorespider";
 
@@ -19,7 +21,7 @@ MongoClient.connect(dbUrl, (err, db) => {
     app.use(bodyParser.json());
 
     // views is directory for all template files
-    app.set('views', __dirname + '/views');
+    app.set('views', __dirname + '/public/views');
     app.set('view engine', 'ejs');    
 
     app.get('/api/ping', (request, response) => {

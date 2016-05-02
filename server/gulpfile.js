@@ -7,12 +7,43 @@ var gutil = require("gulp-util");
 var ts = require('gulp-typescript');
 var exec = require('child_process').exec;
 var spawn = require('child_process').spawn;
+var webpack = require("webpack");
+var webpackConfig = require("./webpack.config");
 
-var tsProject = ts.createProject('tsconfig.json');
-gulp.task("scripts", function() {
+var tsProject = ts.createProject('src/server/tsconfig.json');
+gulp.task("server-scripts", function() {
     var tsResult = tsProject.src()
 		.pipe(ts(tsProject));
 	return tsResult.js.pipe(gulp.dest('dist'));
+});
+
+
+gulp.task("client-scripts", function() {    
+    var config = Object.create(webpackConfig);
+    var compiler = webpack(config);
+    compiler.run(function (err, stats) {
+        if (err) throw new gutil.PluginError("webpack", err);
+        gutil.log("[webpack:build]", stats.toString({
+            colors: true,
+            chunks: false
+        }));
+    });    
+});
+
+gulp.task("client-watch-scripts", function() {    
+    var config = Object.create(webpackConfig);
+    var compiler = webpack(config);
+    compiler.watch({}, function (err, stats) {
+        if (err) throw new gutil.PluginError("webpack", err);
+        gutil.log("[webpack:build]", stats.toString({
+            colors: true,
+            chunks: false
+        }));
+    });  
+});
+
+
+gulp.task("scripts", ["client-scripts", "server-scripts"] , function() {
 });
 
 var node;
@@ -33,7 +64,7 @@ gulp.task("libs", function() {
 
 gulp.task("resources", function () {
       return gulp.src(["resources/**/*.*"])
-         .pipe(gulp.dest("dist"));
+         .pipe(gulp.dest("dist/public"));
 });
 
 gulp.task("copy-client", function () {

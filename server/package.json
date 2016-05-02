@@ -9,13 +9,18 @@
     "express": "^4.13.3",
     "in-app-purchase": "^0.6.3",
     "jsonwebtoken": "^5.7.0",
+    "moment": "^2.13.0",
     "mongodb": "^2.1.7",
     "mongoose": "^4.4.7",
     "morgan": "^1.7.0",
-    "node-uuid": "^1.4.7"
+    "node-uuid": "^1.4.7",
+    "react": "^15.0.2",
+    "react-bootstrap": "^0.29.3",
+    "react-dom": "^15.0.2",
+    "react-router": "^2.4.0"
   },
   "scripts": {
-        "start": "node ./dist/server.js"
+    "start": "node ./dist/server.js"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
@@ -25,7 +30,10 @@
     "gulp-watch": "^4.3.5",
     "merge2": "^1.0.1",
     "run-sequence": "^1.1.5",
-    "typescript": "^1.8.2",
+    "ts-loader": "^0.8.2",
+    "typescript": "^1.8.10",
+    "webpack": "^1.13.0",
+    "webpack-livereload-plugin": "^0.8.1",
     "yargs": "^4.2.0"
   }
 }
