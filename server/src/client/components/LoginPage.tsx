@@ -24,7 +24,9 @@ export class LoginPage extends React.Component<Props, State> {
     
     async login()
     {
-        await auth.authenticate(this.state.email, this.state.password);
+        await auth.authenticate(this.state.email, this.state.password)
+            .catch(err => alert(err.data.message));
+
         this.props.onLoggedIn();
     }
     

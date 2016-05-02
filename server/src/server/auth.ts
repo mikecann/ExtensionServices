@@ -51,17 +51,19 @@ export function setup(router:express.Router, app:express.Application, db:Db)
             });
         }
         else if (users[0].password == password)
-        {                            
+        {                        
+            var tokenLengthMinutes = 1;
+                
             var token = jwt.sign(users[0], app.get('jwtSecret'), {
-                expiresInMinutes: 1440 // expires in 24 hours
+                expiresInMinutes: tokenLengthMinutes
             });                    
             
             console.log("User authenticated", token);   
             
             res.json({
                 success: true,
-                message: 'Enjoy your token!',
-                token: token
+                token: token,
+                expiresInMinutes: tokenLengthMinutes
             });
         } 
         else
