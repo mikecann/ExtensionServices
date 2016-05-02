@@ -3,6 +3,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Layout } from "./Layout"
 import { ReportErrorPage } from "./components/ReportErrorPage";
+import { LoginPage } from "./components/LoginPage";
 
 export const CATEGORIES = [
     {
@@ -26,11 +27,8 @@ export function back()
 export const routes = <Router history={browserHistory}>
 
     <Route path="/" component={Layout}>
-    
-        {
-            CATEGORIES.map(c => <Route path={c.path} component={c.component} key={c.path} /> )
-        }
-        
+        <Route path="login" component={LoginPage} />
+        {CATEGORIES.map(c => <Route path={c.path} component={c.component} key={c.path} /> )}        
     </Route>
     
 </Router>;

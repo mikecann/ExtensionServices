@@ -88,9 +88,8 @@ gulp.task("release", function (done) {
          .pipe(gulp.dest("../heroku"));
 });
 
-gulp.task("watch", function() {
-    watch(["src/**/*.ts"], function () { runSequence("scripts", "server"); });
-    watch(["../client/dist/**/*.*"], function () { runSequence("copy-client"); });
+gulp.task("watch", ["client-watch-scripts"], function() {
+    watch(["src/server/**/*.ts"], function () { runSequence("server-scripts", "server"); });
     watch(["src/**/tsconfig.json"], function () { runSequence("scripts"); });
     watch(["resources/**/*.*"], function() { runSequence("resources") });
 });
