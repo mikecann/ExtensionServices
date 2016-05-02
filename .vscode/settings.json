@@ -2,6 +2,9 @@
 {
     "files.exclude": {
         "**/node_modules": true,
-        "dist": true
+        "npm/dist": true,
+        "npm/js": true,
+        "server/dist": true,
+        "server/js": true
     }  
 }
