@@ -1,6 +1,7 @@
 import * as express from "express";
 import { Db, ObjectID } from "mongodb";
 import * as Sendgrid from "sendgrid";
+import * as email from "./email";
 
 export function setup(app:express.Application, db:Db)
 {
@@ -8,12 +9,13 @@ export function setup(app:express.Application, db:Db)
         response.send('ping right back at ya');
     });    
     
-    app.post('/api/errorReport', async (request, response) => {       
-        console.log("saving error report", request.body)
+    app.post('/api/errorReport', async (request, response) => {
         
-        await db.collection("errorReports").insertOne(request.body);
-        //var sg = new Sendgrid("ptt_admin", "rLfiwDO3P9FV");
-        //sg.send()
+        var report : any = request.body;       
+        console.log("saving error report", report)
+        
+        await db.collection("errorReports").insertOne(report);
+        await email.sendErrorReport(report);
         
         response.send('Saved');
         
