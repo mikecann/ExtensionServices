@@ -6,16 +6,16 @@
   "bundle": "src/typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "0cd5f0a1482dc3149f5446b1d885ef6ac7c57720"
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
     },
     "serve-static/serve-static.d.ts": {
-      "commit": "4d2d0653003a4d1df4d7c68054cce4f4ace58bdf"
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
     },
     "mime/mime.d.ts": {
-      "commit": "4d2d0653003a4d1df4d7c68054cce4f4ace58bdf"
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
     },
     "express/express.d.ts": {
-      "commit": "4d2d0653003a4d1df4d7c68054cce4f4ace58bdf"
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
     },
     "body-parser/body-parser.d.ts": {
       "commit": "4d2d0653003a4d1df4d7c68054cce4f4ace58bdf"
@@ -57,6 +57,18 @@
       "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
     },
     "sweetalert/sweetalert.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "morgan/morgan.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "express-serve-static-core/express-serve-static-core.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "passport/passport.d.ts": {
+      "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "sendgrid/sendgrid.d.ts": {
       "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
     }
   }

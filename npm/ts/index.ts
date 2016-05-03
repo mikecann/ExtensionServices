@@ -14,4 +14,4 @@ export * from "./logging/SendToLogger";
 
 export * from "./error-reporting/ErrorReportView";
 export * from "./error-reporting/ErrorReporting";
-export * from "./error-reporting/DefaultErrorReportSaver";
+export * from "./error-reporting/ESErrorReportService";

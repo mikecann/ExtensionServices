@@ -1,34 +1,32 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments)).next());
+    });
+};
+const axios = require("axios");
+const lzjs = require("lzjs");
 class ESErrorReportService {
-    constructor() {
+    constructor(logger, rootUrl) {
+        this.logger = logger;
+        this.rootUrl = rootUrl;
     }
     save(report) {
-        return null;
-        // var base64 = btoa(unescape(encodeURIComponent(this.state.logStr)));
-        // console.log("Saving logs..", this.state.logStr.length, base64.length);
-        // this.setState({ filesize: (base64.length / 1000) + "Kb" })
-        // var file = new Parse.File("logs.json", { base64: base64 });
-        // file.save()
-        //     .then(() => {
-        //         console.log("Logs saved, reporting error..");
-        //         var packet: ErrorReport = {
-        //             email: this.state.email,
-        //             comments: this.state.comments,
-        //             logs: file,
-        //             version: AppHelpers.version
-        //         }
-        //         return Parse.Cloud.run("reportError", packet);
-        //     })
-        //     .then(result => {
-        //         console.log("Error reported", result);
-        //         LoggingHelpers.clearOldLogs(chrome.storage.local, moment());
-        //         this.setState({ saving: false, sent: true });
-        //         return Parse.Promise.as({});
-        //     })
-        //     .fail(err => {
-        //         console.log("Error during the reporting!", err);
-        //         this.setState({ saving: false, error: err.message });
-        //     });
+        return __awaiter(this, void 0, void 0, function* () {
+            // If its an array we need to compress it
+            if (typeof report.logs !== "string") {
+                var before = JSON.stringify(report.logs);
+                var after = lzjs.compress(before);
+                this.logger.debug(this, "Logs compressed", { before: before.length, after: after.length });
+                report.logs = after;
+            }
+            var url = this.rootUrl + "/api/errorReport";
+            this.logger.debug(this, "Saving error report", { url: url });
+            return axios.post(url, report);
+        });
     }
 }
 exports.ESErrorReportService = ESErrorReportService;

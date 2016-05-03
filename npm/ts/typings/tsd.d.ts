@@ -9,3 +9,5 @@
 /// <reference path="moment/moment-node.d.ts" />
 /// <reference path="moment/moment.d.ts" />
 /// <reference path="react-bootstrap/react-bootstrap.d.ts" />
+/// <reference path="axios/axios.d.ts" />
+/// <reference path="lz-string/lz-string.d.ts" />

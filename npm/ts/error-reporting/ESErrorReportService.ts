@@ -1,46 +1,28 @@
 import { IErrorReportSaver, IErrorReport } from "./ErrorReporting";
+import * as axios from "axios";
+import { ILogger } from "../logging/Logging";
+import * as lzjs from "lzjs";
 
 export class ESErrorReportService implements IErrorReportSaver {
     
-    constructor()
+    constructor(private logger:ILogger, private rootUrl:string)
     {
         
     }
     
-    save(report: IErrorReport): Promise<void> 
-    {
+    async save(report: IErrorReport)
+    {                
+        // If its an array we need to compress it
+        if (typeof report.logs !== "string")
+        {
+            var before = JSON.stringify(report.logs);
+            var after = lzjs.compress(before);
+            this.logger.debug(this, "Logs compressed", { before:before.length, after:after.length });
+            report.logs = after;
+        }            
         
-        return null;
-        
-        // var base64 = btoa(unescape(encodeURIComponent(this.state.logStr)));
-        // console.log("Saving logs..", this.state.logStr.length, base64.length);
-
-        // this.setState({ filesize: (base64.length / 1000) + "Kb" })
-
-        // var file = new Parse.File("logs.json", { base64: base64 });
-        // file.save()
-        //     .then(() => {
-
-        //         console.log("Logs saved, reporting error..");
-        //         var packet: ErrorReport = {
-        //             email: this.state.email,
-        //             comments: this.state.comments,
-        //             logs: file,
-        //             version: AppHelpers.version
-        //         }
-
-        //         return Parse.Cloud.run("reportError", packet);
-        //     })
-        //     .then(result => {
-        //         console.log("Error reported", result);
-        //         LoggingHelpers.clearOldLogs(chrome.storage.local, moment());
-        //         this.setState({ saving: false, sent: true });
-        //         return Parse.Promise.as({});
-        //     })
-        //     .fail(err => {
-        //         console.log("Error during the reporting!", err);
-        //         this.setState({ saving: false, error: err.message });
-        //     });
-
+        var url = this.rootUrl + "/api/errorReport";
+        this.logger.debug(this, "Saving error report", {url});
+        return axios.post(url, report);    
     }
 }

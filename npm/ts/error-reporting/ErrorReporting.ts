@@ -1,11 +1,13 @@
+import { ILog } from "../logging/Logging";
+
 export interface IErrorReportSaver
 {
-    save(report:IErrorReport) : Promise<void>
+    save(report:IErrorReport) : Promise<any>
 }
 
 export interface IErrorReport {
     comments: string;
     version: string;
-    log: string;
+    logs: ILog[] | string;
     email: string;
 }

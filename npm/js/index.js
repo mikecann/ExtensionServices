@@ -12,4 +12,4 @@ __export(require("./logging/LocalStorageLogger"));
 __export(require("./logging/LoggingHelpers"));
 __export(require("./logging/SendToLogger"));
 __export(require("./error-reporting/ErrorReportView"));
-__export(require("./error-reporting/DefaultErrorReportSaver"));
+__export(require("./error-reporting/ESErrorReportService"));

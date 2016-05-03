@@ -3,10 +3,13 @@ import * as ReactDOM from "react-dom";
 import * as marked from "marked";
 import { ILog } from "../logging/Logging";
 import { Button, Input, Alert } from "react-bootstrap";
+import { IErrorReportSaver } from "./ErrorReporting";
+import { LoggingHelpers } from "../logging/LoggingHelpers";
 
 export interface ErrorReportViewProps extends React.Props<any> {
     userEmail?:string;    
     logs?: ILog[];
+    saver: IErrorReportSaver;
 }
 
 export interface ErrorReportViewState extends React.Props<any> {
@@ -15,22 +18,31 @@ export interface ErrorReportViewState extends React.Props<any> {
     saving?: boolean;
     sent?: boolean;
     error?: string;
-    filesize?: string;
     email?: string;
 }
 
-
 export class ErrorReportView extends React.Component<ErrorReportViewProps, ErrorReportViewState> {
     
-    constructor(props: ErrorReportViewProps, context: any) {
+    constructor(props: ErrorReportViewProps, context: any) {        
         super(props, context);
         this.state = { 
-            email: props.userEmail
+            email: props.userEmail            
         };
     }
     
-    reportError() {
-        this.setState({ saving: true, error: null });          
+    async reportError() {
+        this.setState({ saving: true, error: null });    
+        this.props.saver.save({
+           comments: this.state.comments,
+           email: this.state.email,
+           logs:  this.props.logs,
+           version: "1.0"
+        })
+        .catch(err =>  this.setState({ saving: false, error: JSON.stringify(err) }))
+        .then(() =>  {
+            LoggingHelpers.clearOldLogs(chrome.storage.local, moment())
+            this.setState({ saving: false, sent: true, error: null });
+        });
     }    
     
     componentWillReceiveProps(nextProps:ErrorReportViewProps)
@@ -113,8 +125,8 @@ export class ErrorReportView extends React.Component<ErrorReportViewProps, Error
                  <Alert bsStyle="danger" hidden={this.state.error==null}>
                     <strong>Whoops!</strong> {this.state.error}
                 </Alert>
-                <Button disabled={this.isSendButtonDisabled()} bsStyle="primary" onClick={this.reportError.bind(this) }>
-                    {this.state.saving?"Sending logs, this may take a minute ("+this.state.filesize+")...":"Submit"}
+                <Button disabled={this.isSendButtonDisabled()} bsStyle="primary" onClick={() => this.reportError() }>
+                    {this.state.saving?"Sending logs, this may take a minute...":"Submit"}
                 </Button>
             </div>
 
