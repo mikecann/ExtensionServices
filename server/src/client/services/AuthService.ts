@@ -2,8 +2,9 @@ import * as axios from "axios";
 
 export function isAuthenticated()
 {
-    return localStorage.getItem("token") && 
-        parseInt(localStorage.getItem("token_exprire")) > Date.now();
+    return true;
+    // return localStorage.getItem("token") && 
+    //     parseInt(localStorage.getItem("token_exprire")) > Date.now();
 }
 
 export function getToken() : string
