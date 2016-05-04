@@ -70,6 +70,24 @@
     },
     "sendgrid/sendgrid.d.ts": {
       "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "filewriter/filewriter.d.ts": {
+      "commit": "73f7bb99692823f1811817f9753a02b57af5305e"
+    },
+    "moment/moment.d.ts": {
+      "commit": "73f7bb99692823f1811817f9753a02b57af5305e"
+    },
+    "webrtc/MediaStream.d.ts": {
+      "commit": "73f7bb99692823f1811817f9753a02b57af5305e"
+    },
+    "moment/moment-node.d.ts": {
+      "commit": "73f7bb99692823f1811817f9753a02b57af5305e"
+    },
+    "filesystem/filesystem.d.ts": {
+      "commit": "73f7bb99692823f1811817f9753a02b57af5305e"
+    },
+    "chrome/chrome.d.ts": {
+      "commit": "73f7bb99692823f1811817f9753a02b57af5305e"
     }
   }
 }

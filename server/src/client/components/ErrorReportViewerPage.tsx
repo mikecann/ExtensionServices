@@ -7,6 +7,7 @@ import * as axios from "axios";
 import * as lzjs from "lzjs";
 import { Loading } from "./Loading";
 import { ReportView } from "./ReportView";
+import { ILogEntry, ILog, IErrorReport } from "extension-services";
 
 interface Props extends React.Props<any> {
     params: { id:string };

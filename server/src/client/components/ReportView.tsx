@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import { Input, Button, Tabs, Tab, Alert, ButtonToolbar, Well, Panel } from 'react-bootstrap';
 import * as moment from "moment";
 import { LogEntryRow } from "./LogEntryRow";
+import { ILogEntry, ILog, IErrorReport } from "extension-services";
 
 interface ReportViewProps extends React.Props<any> {
     report: IErrorReport;
@@ -18,6 +19,7 @@ export class ReportView extends React.Component<ReportViewProps, ReportViewState
         super(props, context);
         this.state = { };
     }
+
 
     componentDidMount() {
         //console.log("showing reports for logs", this.props.report.logs);
@@ -50,7 +52,9 @@ export class ReportView extends React.Component<ReportViewProps, ReportViewState
 
         return <div>
             <Panel header="Report Details" className="report-details">
-                <Input type="text" readOnly={true} value={this.props.report.version}
+                <Input type="text" readOnly={true} value={this.props.report.app}
+                    label="App" />
+                <Input type="text" readOnly={true} value={this.props.report.appVersion}
                     label="Version" />
                 <Input type="email" readOnly={true} value={this.props.report.email}
                     label="Email" />

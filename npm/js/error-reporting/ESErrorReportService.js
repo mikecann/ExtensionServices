@@ -10,12 +10,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const axios = require("axios");
 const lzjs = require("lzjs");
 class ESErrorReportService {
-    constructor(logger, rootUrl) {
+    constructor(logger, rootUrl, app, appVersion) {
         this.logger = logger;
         this.rootUrl = rootUrl;
+        this.app = app;
+        this.appVersion = appVersion;
     }
-    save(report) {
+    save(comments, email, logs) {
         return __awaiter(this, void 0, void 0, function* () {
+            var report = {
+                comments: comments,
+                email: email,
+                logs: logs,
+                app: this.app,
+                appVersion: this.appVersion
+            };
             // If its an array we need to compress it
             if (typeof report.logs !== "string") {
                 var before = JSON.stringify(report.logs);
@@ -25,7 +34,7 @@ class ESErrorReportService {
             }
             var url = this.rootUrl + "/api/errorReport";
             this.logger.debug(this, "Saving error report", { url: url });
-            return axios.post(url, report);
+            yield axios.post(url, report);
         });
     }
 }

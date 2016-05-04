@@ -1,8 +1,10 @@
-import { IErrorReportSaver, IErrorReport } from "./ErrorReporting";
-import { ILogger } from "../logging/Logging";
+import { IErrorReportSaver } from "./ErrorReporting";
+import { ILogger, ILog } from "../logging/Logging";
 export declare class ESErrorReportService implements IErrorReportSaver {
     private logger;
     private rootUrl;
-    constructor(logger: ILogger, rootUrl: string);
-    save(report: IErrorReport): Promise<Axios.AxiosXHR<{}>>;
+    private app;
+    private appVersion;
+    constructor(logger: ILogger, rootUrl: string, app: string, appVersion: string);
+    save(comments: string, email: string, logs: ILog[]): Promise<void>;
 }

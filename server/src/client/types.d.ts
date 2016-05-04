@@ -1,23 +1,3 @@
-interface IErrorReport {
-    comments: string;
-    version: string;
-    logs: ILog[] | string;
-    email: string;
-}
-
-interface ILog {
-    id: string;
-    date: string;
-    log: ILogEntry[];
-}
-
-interface ILogEntry {
-    level: string;
-    time: string;
-    params: any[];
-    stack?: string;
-}
-
 declare module "lzjs"
 {
      export function compress(data: any): any;

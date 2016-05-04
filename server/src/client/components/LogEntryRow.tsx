@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Input, Button, Tabs, Tab, Alert, ButtonToolbar, Well, Panel } from 'react-bootstrap';
 import * as moment from "moment";
+import { ILogEntry } from "extension-services";
 
 interface LogEntryRowProps extends React.Props<any> {
     entry: ILogEntry;

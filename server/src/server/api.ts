@@ -2,6 +2,7 @@ import * as express from "express";
 import { Db, ObjectID } from "mongodb";
 import * as Sendgrid from "sendgrid";
 import * as email from "./email";
+import { IErrorReport } from "extension-services";
 
 export function setup(app:express.Application, db:Db)
 {
@@ -11,12 +12,11 @@ export function setup(app:express.Application, db:Db)
     
     app.post('/api/errorReport', async (request, response) => {
         
-        var report : any = request.body;       
+        var report : IErrorReport = request.body;       
         console.log("saving error report", report)
         
         var result = await db.collection("errorReports").insertOne(report);        
-        report._id = result.insertedId;
-        await email.sendErrorReport(report, "1.0");
+        await email.sendErrorReport(report, result.insertedId +"");
         
         response.send('Saved');
         

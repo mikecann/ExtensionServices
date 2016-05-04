@@ -38,16 +38,19 @@ export class LoggingHelpers {
         });
     }
 
-    static clearOldLogs(storage: chrome.storage.StorageArea, maxAge?: moment.Moment) {
-        storage.get(null, data => {
-            for (var key of Object.keys(data)) {
-                if (key.substr(0, 3) == "log") {
-                    var log: ILog = data[key];
-                    var logData = moment(parseInt(log.date));
-                    storage.remove(key);
+    static clearOldLogs(storage: chrome.storage.StorageArea, maxAge?: moment.Moment) {        
+        return new Promise<void>((resolve, reject) => {
+            storage.get(null, data => {
+                for (var key of Object.keys(data)) {
+                    if (key.substr(0, 3) == "log") {
+                        var log: ILog = data[key];
+                        var logData = moment(parseInt(log.date));
+                        storage.remove(key);
+                    }
                 }
-            }
-        });
+                resolve();
+            });
+        });        
     }
 
     static canLog(level: string): boolean {

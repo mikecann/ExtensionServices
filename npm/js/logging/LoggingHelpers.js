@@ -30,14 +30,17 @@ class LoggingHelpers {
         });
     }
     static clearOldLogs(storage, maxAge) {
-        storage.get(null, data => {
-            for (var key of Object.keys(data)) {
-                if (key.substr(0, 3) == "log") {
-                    var log = data[key];
-                    var logData = moment(parseInt(log.date));
-                    storage.remove(key);
+        return new Promise((resolve, reject) => {
+            storage.get(null, data => {
+                for (var key of Object.keys(data)) {
+                    if (key.substr(0, 3) == "log") {
+                        var log = data[key];
+                        var logData = moment(parseInt(log.date));
+                        storage.remove(key);
+                    }
                 }
-            }
+                resolve();
+            });
         });
     }
     static canLog(level) {

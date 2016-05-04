@@ -1,6 +1,5 @@
 import * as Sendgrid from "sendgrid";
-
-
+import { IErrorReport } from "extension-services";
 
 // Mandrill info
 var sendgrid = (Sendgrid as any)("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") as Sendgrid.Instance;
@@ -10,7 +9,7 @@ var suggestionTemplate = "<h1>Post To Tumblr {{version}} Suggestion Submitted!</
     "<p><strong>Suggestion:</strong><br/>{{suggestion}}</p>" +
     "<p><strong>Email:</strong><br/>{{email}}</p>";
 
-var reportErrorTemplate = "<h1>Post To Tumblr {{version}} Error!</h1>" +
+var reportErrorTemplate = "<h1>{{app}} {{version}} Error</h1>" +
     "<p><strong><a href='http://extension-services.herokuapp.com/errorReport/{{reportId}}'>View Log</a></strong></p>" +
     "<p><strong>Comments:</strong><br/>{{comments}}</p>" +
     "<p><strong>Email:</strong><br/>{{email}}</p>";
@@ -23,10 +22,11 @@ var reportErrorTemplate = "<h1>Post To Tumblr {{version}} Error!</h1>" +
 //     });
 // } 
 
-export async function sendErrorReport(report: any, pttVersion: string) {
-    await send("PTT Error Report", reportErrorTemplate, {
-        "{{version}}": pttVersion,
-        "{{reportId}}": report._id,
+export async function sendErrorReport(report: IErrorReport, reportId: string) {
+    await send(report.app + " Error Report", reportErrorTemplate, report.email, {
+        "{{app}}": report.app,
+        "{{version}}": report.appVersion,
+        "{{reportId}}": reportId,
         "{{comments}}": report.comments.split("\n").join("<br />"),
         "{{email}}": report.email
     });
@@ -37,7 +37,7 @@ export async function sendErrorReport(report: any, pttVersion: string) {
 //     return send("PTT Test Email", "This is a test tmeail", {});
 // }
 
-function send(subject: string, templateName: string, vars: any) {
+function send(subject: string, templateName: string, replyTo:string, vars: any) {
     console.log("Sending email", { subject, templateName })
     return new Promise<any>((resolve, reject) => {
         sendgrid.send({
