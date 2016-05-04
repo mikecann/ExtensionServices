@@ -1,3 +1,3 @@
 "use strict";
-exports.liveDbUri = "mongodb://mike:&1POhVSIS#Sh@ds015690.mlab.com:15690/chromestorespider";
+exports.liveDbUri = "mongodb://mike:fFsh33fsga56S7sdD@ds013212.mlab.com:13212/heroku_qc7pjrlm";
 exports.jwtSecret = "@#45seFa$agsdd";

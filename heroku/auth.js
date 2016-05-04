@@ -8,8 +8,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const jwt = require("jsonwebtoken");
-function setup(router, app, db) {
-    router.use((req, res, next) => {
+function setup(authRoutes, app, db) {
+    authRoutes.post('/api/authenticate', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        var email = req.body.email;
+        var password = req.body.password;
+        console.log("Got an auth request for ", email);
+        var users = yield db.collection('users').find({ email: email }).toArray();
+        console.log("Got users ", users);
+        if (users.length == 0) {
+            res.status(401).send({
+                success: false,
+                message: 'Auth failed, user not found'
+            });
+        }
+        else if (users[0].password == password) {
+            var tokenLengthMinutes = 60 * 24 * 30; // 1 month
+            var token = jwt.sign(users[0], app.get('jwtSecret'), {
+                expiresInMinutes: tokenLengthMinutes
+            });
+            console.log("User authenticated", token);
+            res.json({
+                success: true,
+                token: token,
+                expiresInMinutes: tokenLengthMinutes
+            });
+        }
+        else
+            res.status(401).send({
+                success: false,
+                message: 'Auth failed, invalid password'
+            });
+    }));
+    authRoutes.use((req, res, next) => {
         // check header or url parameters or post parameters for token
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
         // decode token
@@ -29,40 +59,11 @@ function setup(router, app, db) {
         else {
             // if there is no token
             // return an error
-            return res.status(401).send({
+            return res.status(403).send({
                 success: false,
                 message: 'No token provided, not authenticated'
             });
         }
     });
-    app.post('/api/authenticate', (req, res) => __awaiter(this, void 0, void 0, function* () {
-        var email = req.body.email;
-        var password = req.body.password;
-        console.log("Got an auth request for ", email);
-        var users = yield db.collection('users').find({ email: email }).toArray();
-        console.log("Got users ", users);
-        if (users.length == 0) {
-            res.status(401).send({
-                success: false,
-                message: 'Auth failed, user not found'
-            });
-        }
-        else if (users[0].password == password) {
-            var token = jwt.sign(users[0], app.get('jwtSecret'), {
-                expiresInMinutes: 1440 // expires in 24 hours
-            });
-            console.log("User authenticated", token);
-            res.json({
-                success: true,
-                message: 'Enjoy your token!',
-                token: token
-            });
-        }
-        else
-            res.status(401).send({
-                success: false,
-                message: 'Auth failed, invalid password'
-            });
-    }));
 }
 exports.setup = setup;
