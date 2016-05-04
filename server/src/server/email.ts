@@ -1,15 +1,17 @@
 import * as Sendgrid from "sendgrid";
 
+
+
 // Mandrill info
-var sendgrid = new Sendgrid("ptt_admin", "rLfiwDO3P9FV");
+var sendgrid = (Sendgrid as any)("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") as Sendgrid.Instance;
 
 // Email templates
 var suggestionTemplate = "<h1>Post To Tumblr {{version}} Suggestion Submitted!</h1>" +
     "<p><strong>Suggestion:</strong><br/>{{suggestion}}</p>" +
-    "<p><strong>Email:</strong><br/>{{email}}</p>";        	
+    "<p><strong>Email:</strong><br/>{{email}}</p>";
 
 var reportErrorTemplate = "<h1>Post To Tumblr {{version}} Error!</h1>" +
-    "<p><strong>Output Log:</strong><br/>{{output}}</p>" +
+    "<p><strong><a href='http://extension-services.herokuapp.com/errorReport/{{reportId}}'>View Log</a></strong></p>" +
     "<p><strong>Comments:</strong><br/>{{comments}}</p>" +
     "<p><strong>Email:</strong><br/>{{email}}</p>";
 
@@ -24,7 +26,7 @@ var reportErrorTemplate = "<h1>Post To Tumblr {{version}} Error!</h1>" +
 export async function sendErrorReport(report: any, pttVersion: string) {
     await send("PTT Error Report", reportErrorTemplate, {
         "{{version}}": pttVersion,
-        //"{{output}}": report.output.split("\n").join("<br />"),
+        "{{reportId}}": report._id,
         "{{comments}}": report.comments.split("\n").join("<br />"),
         "{{email}}": report.email
     });
@@ -35,46 +37,33 @@ export async function sendErrorReport(report: any, pttVersion: string) {
 //     return send("PTT Test Email", "This is a test tmeail", {});
 // }
 
-function send(subject:string, templateName: string, vars: any) : Parse.Promise<Parse.Cloud.HTTPResponse>
-{   
-    // // Init our email agent
-    // Mandrill.initialize(mandrilApiKey);
-
-    //  // Construct the email
-    // var msg: Mandrill.Message = {
-    //     html: template(templateName, vars),
-    //     auto_text: true,
-    //     subject: subject,
-    //     to: [{ email: "mike@cannstudios.com", name: "Mike Cann" }],
-    //     from_email: "mike@cannstudios.com",
-    //     inline_css: true
-    // };
-
-    // // Send
-    // var promise = new Parse.Promise<Parse.Cloud.HTTPResponse>();
-    // Mandrill.sendEmail({ async: false, message: msg },
-    // {
-    //     success: httpResponse => promise.resolve(httpResponse),
-    //     error: httpResponse => promise.reject(httpResponse)
-    // });
-    // return promise;
-
-
-    return sendgrid.send({
-        to: ["mike@cannstudios.com"],
-        from: "mike@cannstudios.com",
-        fromname: "Admin of Post To Tumblr",
-        replyto: "mike@cannstudios.com",
-        html: template(templateName, vars),
-        subject: subject      
+function send(subject: string, templateName: string, vars: any) {
+    console.log("Sending email", { subject, templateName })
+    return new Promise<any>((resolve, reject) => {
+        sendgrid.send({
+            to: ["mike@cannstudios.com"],
+            from: "mike@cannstudios.com",
+            fromname: "Mike From Post To Tumblr",
+            replyto: "mike@cannstudios.com",
+            subject,
+            html: template(templateName, vars)
+        },
+        (err, json) => {
+            if (err)
+            {
+                console.error("Sendgrid email send error", err);
+                reject(err);
+            }                
+            else
+                resolve(json);
+        });
     })
 }
 
-function template(template:string, vars:any) :string
-{
+function template(template: string, vars: any): string {
     var t = template;
     Object.keys(vars).forEach(key => {
         t = t.replace(key, vars[key]);
-    });        
+    });
     return t;
 }

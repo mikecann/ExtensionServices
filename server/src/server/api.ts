@@ -14,8 +14,9 @@ export function setup(app:express.Application, db:Db)
         var report : any = request.body;       
         console.log("saving error report", report)
         
-        await db.collection("errorReports").insertOne(report);
-        await email.sendErrorReport(report);
+        var result = await db.collection("errorReports").insertOne(report);        
+        report._id = result.insertedId;
+        await email.sendErrorReport(report, "1.0");
         
         response.send('Saved');
         
