@@ -1,4 +1,4 @@
 server/node_modules
 server/dist
 npm/node_modules
-server/src/server/config.ts
+server/resources/config.json

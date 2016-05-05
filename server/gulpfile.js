@@ -64,7 +64,7 @@ gulp.task("libs", function() {
 
 gulp.task("resources", function () {
       return gulp.src(["resources/**/*.*"])
-         .pipe(gulp.dest("dist/public"));
+         .pipe(gulp.dest("dist"));
 });
 
 gulp.task("copy-client", function () {

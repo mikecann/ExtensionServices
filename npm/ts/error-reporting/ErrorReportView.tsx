@@ -36,11 +36,11 @@ export class ErrorReportView extends React.Component<ErrorReportViewProps, Error
         try {
             await this.props.saver.save(this.state.comments, this.state.email, this.props.logs);
             this.setState({ saving: false, sent: true, error: null });
-            await LoggingHelpers.clearOldLogs(chrome.storage.local, moment());
+            //await LoggingHelpers.clearOldLogs(chrome.storage.local, moment());
             console.log("Error reported!");
         }
         catch (err) {
-            this.setState({ saving: false, error: JSON.stringify(err) });
+            this.setState({ saving: false, error: err.data });
         }
     }
 
@@ -121,7 +121,7 @@ export class ErrorReportView extends React.Component<ErrorReportViewProps, Error
 
             <div className="section" hidden={this.state.sent}>
                 <Alert bsStyle="danger" hidden={this.state.error == null}>
-                    <strong>Whoops!</strong> {this.state.error}
+                    <strong>Whoops! It Looks like something went wrong, please email the below error to: mike@cannstudios.com</strong><br/><br/>{this.state.error}
                 </Alert>
                 <Button disabled={this.isSendButtonDisabled() } bsStyle="primary" onClick={() => this.reportError() }>
                     {this.state.saving ? "Sending logs, this may take a minute..." : "Submit"}

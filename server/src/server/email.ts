@@ -1,8 +1,9 @@
 import * as Sendgrid from "sendgrid";
 import { IErrorReport } from "extension-services";
+import { default as config } from "./config";
 
 // Mandrill info
-var sendgrid = (Sendgrid as any)("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") as Sendgrid.Instance;
+var sendgrid = (Sendgrid as any)(config.sendGridKey) as Sendgrid.Instance;
 
 // Email templates
 var suggestionTemplate = "<h1>Post To Tumblr {{version}} Suggestion Submitted!</h1>" +

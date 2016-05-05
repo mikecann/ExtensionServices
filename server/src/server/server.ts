@@ -4,14 +4,14 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { MongoClient, ObjectID } from "mongodb";
 import * as jwt from "jsonwebtoken";
-import * as config from "./config";
+import { default as config } from "./config";
 import * as auth from "./auth";
 import * as api from "./api";
 import * as morgan from "morgan";
 
 var app = express();
 
-MongoClient.connect(config.liveDbUri, (err, db) => {
+MongoClient.connect(config.dbURI, (err, db) => {
 
     if (err)
         throw err;
