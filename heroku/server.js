@@ -3,15 +3,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongodb_1 = require("mongodb");
-const config = require("./config");
+const config_1 = require("./config");
 const api = require("./api");
 const morgan = require("morgan");
 var app = express();
-mongodb_1.MongoClient.connect(config.liveDbUri, (err, db) => {
+mongodb_1.MongoClient.connect(config_1.default.dbURI, (err, db) => {
     if (err)
         throw err;
     app.set('port', (process.env.PORT || 5000));
-    app.set('jwtSecret', config.jwtSecret);
+    app.set('jwtSecret', config_1.default.jwtSecret);
     app.use(express.static(__dirname + '/public'));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());

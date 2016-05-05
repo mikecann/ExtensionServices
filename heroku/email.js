@@ -8,13 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const Sendgrid = require("sendgrid");
+const config_1 = require("./config");
 // Mandrill info
-var sendgrid = Sendgrid("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");
+var sendgrid = Sendgrid(config_1.default.sendGridKey);
 // Email templates
 var suggestionTemplate = "<h1>Post To Tumblr {{version}} Suggestion Submitted!</h1>" +
     "<p><strong>Suggestion:</strong><br/>{{suggestion}}</p>" +
     "<p><strong>Email:</strong><br/>{{email}}</p>";
-var reportErrorTemplate = "<h1>Post To Tumblr {{version}} Error!</h1>" +
+var reportErrorTemplate = "<h1>{{app}} {{version}} Error</h1>" +
     "<p><strong><a href='http://extension-services.herokuapp.com/errorReport/{{reportId}}'>View Log</a></strong></p>" +
     "<p><strong>Comments:</strong><br/>{{comments}}</p>" +
     "<p><strong>Email:</strong><br/>{{email}}</p>";
@@ -25,11 +26,12 @@ var reportErrorTemplate = "<h1>Post To Tumblr {{version}} Error!</h1>" +
 //         "{{email}}": user.getEmail()
 //     });
 // } 
-function sendErrorReport(report, pttVersion) {
+function sendErrorReport(report, reportId) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield send("PTT Error Report", reportErrorTemplate, {
-            "{{version}}": pttVersion,
-            "{{reportId}}": report._id,
+        yield send(report.app + " Error Report", reportErrorTemplate, report.email, {
+            "{{app}}": report.app,
+            "{{version}}": report.appVersion,
+            "{{reportId}}": reportId,
             "{{comments}}": report.comments.split("\n").join("<br />"),
             "{{email}}": report.email
         });
@@ -40,7 +42,7 @@ exports.sendErrorReport = sendErrorReport;
 // {
 //     return send("PTT Test Email", "This is a test tmeail", {});
 // }
-function send(subject, templateName, vars) {
+function send(subject, templateName, replyTo, vars) {
     console.log("Sending email", { subject: subject, templateName: templateName });
     return new Promise((resolve, reject) => {
         sendgrid.send({

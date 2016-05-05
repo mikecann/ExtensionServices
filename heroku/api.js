@@ -17,8 +17,7 @@ function setup(app, db) {
         var report = request.body;
         console.log("saving error report", report);
         var result = yield db.collection("errorReports").insertOne(report);
-        report._id = result.insertedId;
-        yield email.sendErrorReport(report, "1.0");
+        yield email.sendErrorReport(report, result.insertedId + "");
         response.send('Saved');
     }));
     app.get('/api/errorReport', (request, response) => __awaiter(this, void 0, void 0, function* () {
