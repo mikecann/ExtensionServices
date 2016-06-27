@@ -13,3 +13,4 @@ __export(require("./logging/LoggingHelpers"));
 __export(require("./logging/SendToLogger"));
 __export(require("./error-reporting/ErrorReportView"));
 __export(require("./error-reporting/ESErrorReportService"));
+__export(require("./storage/ChromeStorage"));

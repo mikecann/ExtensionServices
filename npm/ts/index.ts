@@ -15,3 +15,6 @@ export * from "./logging/SendToLogger";
 export * from "./error-reporting/ErrorReportView";
 export * from "./error-reporting/ErrorReporting";
 export * from "./error-reporting/ESErrorReportService";
+
+export * from "./storage/IStorage";
+export * from "./storage/ChromeStorage";
