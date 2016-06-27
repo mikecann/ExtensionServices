@@ -1,11 +1,12 @@
 {
   "name": "extension-services",
-  "version": "0.0.7",
+  "version": "0.0.10",
   "description": "A generic collection of helpers and services for use in chrome extensions",
   "main": "js/index.js",
   "typings": "js/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc -p . --watch"
   },
   "repository": {
     "type": "git",
@@ -33,8 +34,8 @@
   },
   "devDependencies": {
     "marked": "^0.3.5",    
-    "react": "^15.0.0",
+    "react": "15.0.2",
     "react-bootstrap": "^0.28.2",
-    "react-dom": "^15.0.0"
+    "react-dom": "15.0.2"
   }
 }
