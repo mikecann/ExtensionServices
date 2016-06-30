@@ -1,6 +1,6 @@
 {
   "name": "extension-services",
-  "version": "0.0.11",
+  "version": "0.1.0",
   "description": "A generic collection of helpers and services for use in chrome extensions",
   "main": "js/index.js",
   "typings": "js/index.d.ts",
@@ -33,7 +33,7 @@
     "moment": "^2.13.0"
   },
   "devDependencies": {
-    "marked": "^0.3.5",    
+    "marked": "^0.3.5",
     "react": "15.0.2",
     "react-bootstrap": "^0.28.2",
     "react-dom": "15.0.2"

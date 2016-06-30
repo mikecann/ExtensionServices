@@ -18,3 +18,10 @@ export * from "./error-reporting/ESErrorReportService";
 
 export * from "./storage/IStorage";
 export * from "./storage/ChromeStorage";
+
+export * from "./chrome/ChromeHelpers";
+
+export * from "./signals/Signals";
+
+export * from "./state-management/StateModel";
+export * from "./state-management/StateModelPersistance";

@@ -14,3 +14,7 @@ __export(require("./logging/SendToLogger"));
 __export(require("./error-reporting/ErrorReportView"));
 __export(require("./error-reporting/ESErrorReportService"));
 __export(require("./storage/ChromeStorage"));
+__export(require("./chrome/ChromeHelpers"));
+__export(require("./signals/Signals"));
+__export(require("./state-management/StateModel"));
+__export(require("./state-management/StateModelPersistance"));
