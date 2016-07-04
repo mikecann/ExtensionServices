@@ -88,6 +88,9 @@
     },
     "chrome/chrome.d.ts": {
       "commit": "73f7bb99692823f1811817f9753a02b57af5305e"
+    },
+    "classnames/classnames.d.ts": {
+      "commit": "70654e94b3265df2cef4656e8ca31516f8474a22"
     }
   }
 }

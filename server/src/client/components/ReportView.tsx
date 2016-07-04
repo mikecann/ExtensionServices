@@ -14,17 +14,17 @@ interface ReportViewState extends React.Props<any> {
 }
 
 export class ReportView extends React.Component<ReportViewProps, ReportViewState> {
-    
+
     constructor(props: ReportViewProps, context) {
         super(props, context);
-        this.state = { };
+        this.state = {};
     }
 
 
     componentDidMount() {
         //console.log("showing reports for logs", this.props.report.logs);
         //this.setState({ activeLog: (this.props.report.logs as ILog[])[0] });
-    }        
+    }
 
     private renderLogs() {
         var count = 0;
@@ -33,19 +33,26 @@ export class ReportView extends React.Component<ReportViewProps, ReportViewState
         });
     }
 
-    private renderLogButton(l: ILog, index:number) {
+    private renderLogButton(l: ILog, index: number) {
         return <button className="btn btn-default" key={index}
             onClick={ () => { this.setState({ activeLog: l }) } }>
-                {moment(parseInt(l.date)).format("DD/MM/YYYY hh:mm") + " - " + l.log.length}
-            </button>;
+            {moment(parseInt(l.date)).format("DD/MM/YYYY hh:mm") + " - " + l.log.length}
+        </button>;
     }
 
-    private renderReportRows() {
-        if (this.state.activeLog == null)
+    private renderReportRows(log:ILog) {
+        if (log == null)
             return null;
 
         var count = 0;
-        return this.state.activeLog.log.map(e => <LogEntryRow entry={e} key={e.time + " - " + count++} />);
+        return <Panel header={log.id}>
+            <table>
+                <tbody>
+                    {log.log.map((e, i) => <LogEntryRow entry={e} index={i} />) }
+                </tbody>
+            </table>
+        </Panel>
+
     }
 
     render() {
@@ -62,11 +69,11 @@ export class ReportView extends React.Component<ReportViewProps, ReportViewState
                     label="Comments" />
             </Panel>
             <Panel header="Logs" className="logs-list">
-                {this.renderLogs()}
+                {this.renderLogs() }
             </Panel>
             <div className="entry-rows">
-                {this.renderReportRows() }
+                {this.renderReportRows(this.state.activeLog)}
             </div>
-         </div>;
+        </div>;
     }
 }

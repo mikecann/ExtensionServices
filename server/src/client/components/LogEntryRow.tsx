@@ -3,72 +3,45 @@ import * as ReactDOM from "react-dom";
 import { Input, Button, Tabs, Tab, Alert, ButtonToolbar, Well, Panel } from 'react-bootstrap';
 import * as moment from "moment";
 import { ILogEntry } from "extension-services";
+import * as classnames from "classnames";
 
 interface LogEntryRowProps extends React.Props<any> {
     entry: ILogEntry;
+    index: number;
+    isHighlighted?: boolean;
 }
 
 interface LogEntryRowState extends React.Props<any> {
-    expanded?: boolean;
-    headerItems?: string;
+    message?: string;
+    truncatedMessage?: string;
+    truncatedParams?: string;
+    isExpanded?: boolean;
+    serializedParams?: string;
 }
 
 export class LogEntryRow extends React.Component<LogEntryRowProps, LogEntryRowState> {
-    
-    maxHeaderLength = 150;
 
     constructor(props: LogEntryRowProps, context) {
         super(props, context);
-        this.state = { expanded: false };
+        const {entry} = props;
+        var message = (entry.params && entry.params.length > 0) ? entry.params[0] + "" : "";
+        var args = entry.params.slice(1);
+        var serializedParams = args.map(a => JSON.stringify(a)).filter(s => s.length > 0).join(", ");
+        this.state = {
+            message,
+            serializedParams,
+            truncatedMessage: this.truncate(message, 80),
+            truncatedParams: this.truncate(serializedParams, 80)
+        };
     }
 
-    componentDidMount() {
+    private truncate(str: string, maxLen: number): string {
+        if (str.length < maxLen - 2)
+            return str;
+        if (str.length < maxLen)
+            return str;
 
-        var jsonParams = this.getParamsStr(this.props.entry.params);
-        var header = this.props.entry.level;
-
-        if (jsonParams.length > 150)
-            header += " " + jsonParams.substr(0, 147) + "...";
-        else
-            header += " " + jsonParams;
-
-        this.setState({
-            expanded: false
-        });   
-    }    
-
-    private getParamsStr(params: any[]): string {
-        return params.map(p => JSON.stringify(p)).join(' ');
-    }
-
-    private renderHeaderLevel() {
-        return <span>{this.props.entry.level}</span>;
-    }
-
-    private renderHeaderParams() {
-
-        var length = 0;
-        var count = 0;
-        return this.props.entry.params.map(p => {    
-
-            if (length >= this.maxHeaderLength - 3)
-                return "";
-
-            var type = typeof p;
-            var str = JSON.stringify(p);
-            if (length + str.length > this.maxHeaderLength - 3)
-                str = str.substr(0, this.maxHeaderLength - length - 3) + "...";
-
-            length += str.length;
-                       
-            return <span key={count++} className={"param-type-" + type}>{str}</span>;
-        });
-    }
-
-    toggleExpand() {
-        this.setState({
-            expanded: !this.state.expanded
-        });
+        return str.substr(0, maxLen - 2) + "..";
     }
 
     private openDOMSnapshot() {
@@ -80,28 +53,65 @@ export class LogEntryRow extends React.Component<LogEntryRowProps, LogEntryRowSt
         return this.props.entry.params.length > 0 && this.props.entry.params[0] == "DOMSnapshot";
     }
 
-    private renderContents() {
-
-        if (this.isDOMSnapshot())
-            return <a href="#" onClick={ this.openDOMSnapshot.bind(this) } >View DOM Snapshot</a>
-
-        return <pre>{JSON.stringify(this.props.entry, null, 4) }</pre>;
-    }
-
     private getTime(): string {
         return moment(parseInt(this.props.entry.time)).format("hh:mm:ss.SSS");
     }
-    
-    render() {
 
-        return <div className="log-entry-row">
-            <button className="btn btn-default" onClick={ this.toggleExpand.bind(this) }>
-                <span className={"entry-level-indicator entry-level-" + this.props.entry.level.toLowerCase()}></span>
-                <span>{this.getTime()}</span>{this.renderHeaderParams()}
-            </button>
-            <Panel collapsible expanded={this.state.expanded}>
-                { this.state.expanded ? this.renderContents() : ""}
-            </Panel>
-        </div>
+    highlight() {
+        //  if (!this.props.isHighlighted)
+        //     Routes.gotoLog(this.props.log.id, this.props.index);         
+    }
+
+    expand() {
+        this.setState({ isExpanded: !this.state.isExpanded });
+    }
+
+    render() {
+        const { index, entry, isHighlighted } = this.props;
+        var { truncatedMessage, truncatedParams, isExpanded } = this.state;
+        return <tr key={index}
+            className={classnames("entry", isHighlighted ? "highlighted" : null, entry.level + "-level") }>
+
+            <td className="entry-index" onClick={() => this.highlight() }>
+                {index}
+            </td>
+
+            <td className="entry-timestamp" onClick={() => this.expand() }>
+                {this.getTime() }
+            </td>
+            <td className="entry-level" onClick={() => this.expand() }>
+                {entry.level}
+            </td>
+
+            { isExpanded ? this.renderExpanded() : this.renderUnexpanded() }
+
+        </tr>;
+    }
+
+    renderExpanded() {
+         var { index, entry, isHighlighted } = this.props; 
+         var { truncatedMessage, truncatedParams, isExpanded, message } = this.state;
+         var params = JSON.stringify(entry.params.slice(1), null, 4);
+
+         return <td className="entry-message" onClick={() => this.expand()}>
+                <div>{message}</div>
+                <div style={{position: "relative"}} onClick={e => e.stopPropagation()}>
+                    <pre style={{cursor: "text"}}>
+                        {params}
+                    </pre>                      
+                </div>                      
+        </td>;
+    }
+
+    renderUnexpanded() {
+        var { index, entry, isHighlighted } = this.props;
+        var { truncatedMessage, truncatedParams, isExpanded, message } = this.state;
+        var classes = classnames("entry-message", truncatedMessage != message ? "truncated" : null);
+
+        return <td className={classes} onClick={() => this.expand() }>
+            <div style={{ position: "relative" }}>
+                {truncatedMessage} { truncatedParams != '[]' ? <span className="entry-params">{truncatedParams}</span> : null }
+            </div>
+        </td>;
     }
 }

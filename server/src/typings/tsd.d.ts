@@ -26,3 +26,4 @@
 /// <reference path="moment/moment-node.d.ts" />
 /// <reference path="moment/moment.d.ts" />
 /// <reference path="webrtc/MediaStream.d.ts" />
+/// <reference path="classnames/classnames.d.ts" />

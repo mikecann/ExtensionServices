@@ -6,6 +6,7 @@ import { Loading } from "./components/Loading";
 import { LoginPage } from "./components/LoginPage";
 import * as auth from "./services/AuthService";
 import { goto, CATEGORIES } from './Routes';
+import {Header} from "./Header";
 
 interface Props extends React.Props<any> {
 }
@@ -28,10 +29,7 @@ export class Layout extends React.Component<Props, State> {
     
     renderAuthed()
     {
-        return <div>
-            <ButtonToolbar style={{ marginBottom: 20 }}>                
-                {CATEGORIES.map(c => <Button bsStyle="default" onClick={() => goto(c.path)} key={c.path}>{c.label}</Button>)}                
-            </ButtonToolbar>         
+        return <div>            
             { this.props.children }             
         </div>
     }
@@ -43,7 +41,13 @@ export class Layout extends React.Component<Props, State> {
         </div>
     }
     
-    render() {        
-        return auth.isAuthenticated() ? this.renderAuthed() : this.renderNotAuthed();
+    render() {
+        
+        return <div style={{padding: 10}}>
+            <Header />            
+            <div className="container" style={{ marginTop: 40}}>
+                {auth.isAuthenticated() ? this.renderAuthed() : this.renderNotAuthed()}
+            </div>                        
+        </div>;
     }
 }
