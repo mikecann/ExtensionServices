@@ -1,4 +1,1 @@
-server/node_modules
-server/dist
-npm/node_modules
-server/resources/config.json
+node_modules

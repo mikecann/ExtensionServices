@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "jsx": "react",
+        "moduleResolution": "node", 
+        "declaration": true,
+        "outDir": "js"
+    },
+    "exclude": [
+        "js",
+        "node_modules"
+    ]
+}

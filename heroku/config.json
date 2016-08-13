@@ -1,5 +1,0 @@
-{
-    "dbURI": "mongodb://mike:fFsh33fsga56S7sdD@ds013212.mlab.com:13212/heroku_qc7pjrlm",
-    "jwtSecret": "@#45seFa$agsdd",
-    "sendGridKey": "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"
-}
