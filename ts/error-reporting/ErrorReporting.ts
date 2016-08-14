@@ -1,4 +1,4 @@
-import { ILog } from "../logging/Logging";
+import { ILog } from "mikeysee-typescript-helpers";
 
 export interface IErrorReportSaver
 {

@@ -1,4 +1,4 @@
-import { FileHelpers } from "../file/FileHelpers";
+import { FileHelpers } from "mikeysee-typescript-helpers";
 import { IUpdate } from "./Updates";
 
 export class UpdateHelpers

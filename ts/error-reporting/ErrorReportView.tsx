@@ -1,10 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as marked from "marked";
-import { ILog } from "../logging/Logging";
+import { ILog, LoggingHelpers } from "mikeysee-typescript-helpers";
 import { Button, Alert } from "react-bootstrap";
 import { IErrorReportSaver } from "./ErrorReporting";
-import { LoggingHelpers } from "../logging/LoggingHelpers";
 import * as moment from "moment";
 
 export interface ErrorReportViewProps extends React.Props<any> {

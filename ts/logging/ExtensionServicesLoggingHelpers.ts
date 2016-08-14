@@ -1,7 +1,7 @@
 import * as moment from "moment";
-import { ILog } from "./Logging";
+import { ILog } from "mikeysee-typescript-helpers";
 
-export class LoggingHelpers {
+export class ExtensionServicesLoggingHelpers {
     static logLevels = ["debug", "info", "warn", "error"];
     static logLevel: string = "debug";
 
@@ -25,19 +25,6 @@ export class LoggingHelpers {
         });
     }
 
-    static filterByMaxLength(logs: ILog[], maxLen: number): ILog[] {
-        var count = 0;
-        return logs.filter(l => {
-            if (count > maxLen)
-                return false;
-
-            var str = JSON.stringify(l);
-            count += str.length;
-
-            return count < maxLen;
-        });
-    }
-
     static clearOldLogs(storage: chrome.storage.StorageArea, maxAge?: moment.Moment) {        
         return new Promise<void>((resolve, reject) => {
             storage.get(null, data => {
@@ -51,17 +38,5 @@ export class LoggingHelpers {
                 resolve();
             });
         });        
-    }
-
-    static canLog(level: string): boolean {
-        var requiredIndx = this.logLevels.indexOf(this.logLevel);
-        if (requiredIndx == -1)
-            requiredIndx = 2;
-
-        var levelIndx = this.logLevels.indexOf(level);
-        if (levelIndx == -1)
-            levelIndx = 2;
-
-        return levelIndx >= requiredIndx;
     }
 }

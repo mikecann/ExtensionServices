@@ -1,4 +1,4 @@
-import {IStorage} from "./IStorage";
+import {IStorage} from "mikeysee-typescript-helpers";
 
 export class ChromeStorage implements IStorage
 {
