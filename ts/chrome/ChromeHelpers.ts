@@ -7,7 +7,7 @@ export class ChromeHelpers
         });
     }
 
-   static getBackgroundPage() : Promise<Window>
+   static getBackgroundPage<T>() : Promise<T| Window>
     {
         return new Promise<Window>((resolve, reject) => {
             chrome.runtime.getBackgroundPage(page => resolve(page));
