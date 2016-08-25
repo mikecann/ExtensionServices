@@ -12,3 +12,6 @@ export * from "./error-reporting/ESErrorReportService";
 export * from "./storage/ChromeStorage";
 
 export * from "./chrome/ChromeHelpers";
+
+export * from "./donate/ChooseDonation";
+export * from "./donate/PaymentOptions";

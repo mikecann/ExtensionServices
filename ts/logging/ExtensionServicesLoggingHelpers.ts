@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { ILog } from "mikeysee-typescript-helpers";
+import { ILog } from "mikeysee-helpers";
 
 export class ExtensionServicesLoggingHelpers {
     static logLevels = ["debug", "info", "warn", "error"];

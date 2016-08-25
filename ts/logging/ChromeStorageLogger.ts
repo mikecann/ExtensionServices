@@ -1,4 +1,4 @@
-import { ILogger, ILog } from "mikeysee-typescript-helpers";
+import { ILogger, ILog } from "mikeysee-helpers";
 import * as moment from "moment";
 
 export class ChromeStorageLogger implements ILogger {

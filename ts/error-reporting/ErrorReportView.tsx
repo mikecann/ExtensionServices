@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as marked from "marked";
-import { ILog, LoggingHelpers } from "mikeysee-typescript-helpers";
+import { ILog, LoggingHelpers } from "mikeysee-helpers";
 import { Button, Alert } from "react-bootstrap";
 import { IErrorReportSaver } from "./ErrorReporting";
 import * as moment from "moment";

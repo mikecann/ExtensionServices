@@ -1,6 +1,6 @@
 import { IErrorReportSaver, IErrorReport } from "./ErrorReporting";
 import * as axios from "axios";
-import { ILogger, ILog } from "mikeysee-typescript-helpers";
+import { ILogger, ILog } from "mikeysee-helpers";
 import * as lzjs from "lzjs";
 
 export class ESErrorReportService implements IErrorReportSaver {
