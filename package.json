@@ -27,7 +27,7 @@
   "homepage": "https://github.com/mikecann/ExtensionServices#readme",
   "dependencies": {
     "axios": "^0.11.0",
-    "braintree-web": "^3.0.1",
+    "braintree-web": "^2.27.0",
     "chrome": "^0.1.0",
     "lz-string": "^1.4.4",
     "lzjs": "^1.3.0",

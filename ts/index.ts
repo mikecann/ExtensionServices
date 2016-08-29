@@ -14,4 +14,4 @@ export * from "./storage/ChromeStorage";
 export * from "./chrome/ChromeHelpers";
 
 export * from "./donate/ChooseDonation";
-export * from "./donate/PaymentOptions";
+export * from "./donate/DonateWithBraintree";
