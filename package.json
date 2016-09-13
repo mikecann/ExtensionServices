@@ -1,6 +1,6 @@
 {
   "name": "extension-services",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "description": "A generic collection of helpers and services for use in chrome extensions",
   "main": "js/index.js",
   "typings": "js/index.d.ts",

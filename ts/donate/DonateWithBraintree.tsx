@@ -26,13 +26,13 @@ export class DonateWithBraintree extends React.Component<PaymentOptionsProps, Pa
 
     componentDidMount() {
         console.log("creating braintree client...");
-        const {paymentToken} = this.props;
+        const {paymentToken, amount} = this.props;
         this.setState({ isBraintreeLoading: true });
         braintree.setup(paymentToken, "dropin", {
             container: "dropin-container",
             paypal: {
                 singleUse: true,
-                amount: 10.00,
+                amount,
                 currency: 'USD'
             },
             onError: err => this.onError(err),
@@ -73,7 +73,7 @@ export class DonateWithBraintree extends React.Component<PaymentOptionsProps, Pa
             {isBraintreeLoading ? <div>Loading Secure Payments Provider...</div> : null}
             <form onSubmit={e => this.onPaymentSubmit(e) }>
                 <div id="dropin-container"></div>
-                <input id="amount" type="hidden" value={amount} />
+                <input id="amount" type="hidden" value={amount+""} />
                 { this.renderSubmitButton() }
             </form>
         </div>
@@ -86,7 +86,7 @@ export class DonateWithBraintree extends React.Component<PaymentOptionsProps, Pa
             return null;
         
         if (isSubmittingPaymentDetails)
-            return <button className="btn btn-success donate disabled" disabled="disabled" type="submit">Donate</button>
+            return <button className="btn btn-success donate disabled" disabled={true} type="submit">Donate</button>
         
         return <button className="btn btn-success donate" type="submit">Donate</button>;
     }
