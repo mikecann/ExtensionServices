@@ -108,24 +108,23 @@ export class ErrorReportView extends React.Component<ErrorReportViewProps, Error
                 <div className="form-group">
                     <label>Email</label>
                     <input type="email"
-                        plceholder="Email"
-                        ref="input"
-                        bsStyle={this.validationState() }
+                        className="form-control"
                         onChange={this.onEmailChange.bind(this) }
                         readOnly={this.state.saving || this.state.sent}
-                        value={this.state.email} hasFeedback
-                        placeholder="So I can get back to you!" />
+                        value={this.state.email}
+                        placeholder="So I can get back to you!!" />
                 </div>
 
             </div>
+            
 
             <div className="section" hidden={this.state.sent}>
-                <Alert bsStyle="danger" hidden={this.state.error == null}>
+                <div className="alert alert-danger" role="alert" hidden={this.state.error == null}>
                     <strong>Whoops! It Looks like something went wrong, please email the below error to: mike@cannstudios.com</strong><br/><br/>{this.state.error}
-                </Alert>
-                <Button disabled={this.isSendButtonDisabled() } bsStyle="primary" onClick={() => this.reportError() }>
+                </div>
+                <button className="btn btn-primary" disabled={this.isSendButtonDisabled() } onClick={() => this.reportError() }>
                     {this.state.saving ? "Sending logs, this may take a minute..." : "Submit"}
-                </Button>
+                </button>
             </div>
 
             <div className="section" hidden={!this.state.sent}>

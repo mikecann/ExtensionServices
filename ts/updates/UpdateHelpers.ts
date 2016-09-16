@@ -19,7 +19,7 @@ export class UpdateHelpers
     }
 
     static async loadUpdateNotes(update: IUpdate): Promise<IUpdate> {
-        var notes = await FileHelpers.load("data/" + update.notes);
+        var notes = await FileHelpers.load(update.notes);
         update.notes = notes;
         return update;
     }

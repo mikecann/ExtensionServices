@@ -21,13 +21,13 @@
       "commit": "67557f18a898462614ed14063a54ca33a1cfab12"
     },
     "react/react.d.ts": {
-      "commit": "67557f18a898462614ed14063a54ca33a1cfab12"
+      "commit": "9dbdb50546cbec870208edb11e962872128cc1f8"
     },
     "chrome/chrome.d.ts": {
       "commit": "67557f18a898462614ed14063a54ca33a1cfab12"
     },
     "react-bootstrap/react-bootstrap.d.ts": {
-      "commit": "67557f18a898462614ed14063a54ca33a1cfab12"
+      "commit": "9dbdb50546cbec870208edb11e962872128cc1f8"
     }
   }
 }
